@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using WebApplication2.Domain;
+using WebApplication2.Exceptions;
 using WebApplication2.Infrastructure.Persistence;
 
 namespace WebApplication2.Features.Products.Queries
@@ -18,6 +20,11 @@ namespace WebApplication2.Features.Products.Queries
         public async Task<GetProductQueryResponse> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
             var product = await _context.Products.FindAsync(request.ProductId);
+
+            if(product is null)
+            {
+                throw new NotFoundException(nameof(Product), request.ProductId);
+            }
             return new GetProductQueryResponse
             {
                 Description = product.Description,
