@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using WebApplication2.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyAppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 var app = builder.Build();
 
