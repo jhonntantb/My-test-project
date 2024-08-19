@@ -9,7 +9,7 @@ namespace WebApplication2.Exceptions
             Errors = new Dictionary<string, string[]>();
         }
 
-        public ValidationException(IEnumerable<ValidationFailure> failures) : this
+        public ValidationException(IEnumerable<ValidationFailure> failures) : this()
         {
             Errors =  failures
                 .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
